@@ -15,7 +15,7 @@ public class LogService {
 		var consumer = new KafkaConsumer<String, String>(properties());
 		consumer.subscribe(Pattern.compile("ECOMMERCE.*"));
 		while(true) {
-			var records = consumer.poll(Duration.ofMillis(100));
+			var records = consumer.poll(Duration.ofMillis(1000));
 			if(!records.isEmpty()){
 				System.out.println("Found " + records.count() + " registers");
 				for(var record : records) {
