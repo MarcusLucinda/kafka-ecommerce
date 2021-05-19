@@ -4,16 +4,25 @@ import java.math.BigDecimal;
 
 public class Order {
 
-	private final String userId, orderId;
+	private final String orderId, email;
 	private final BigDecimal amount;
 	
-	public Order(String userId, String orderId, BigDecimal amount) {
+	public Order(String orderId, BigDecimal amount, String email) {
 		super();
-		this.userId = userId;
 		this.orderId = orderId;
+		this.email = email;
 		this.amount = amount;
 	}
+
+	public BigDecimal getAmount() {
+		return amount;
+	}
+
+	public String getOrderId() {
+		return orderId;
+	}
 	
-	
-	
+	public String getEmail() {
+		return email;
+	}
 }
