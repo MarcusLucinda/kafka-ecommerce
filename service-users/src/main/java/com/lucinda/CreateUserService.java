@@ -23,18 +23,18 @@ public class CreateUserService {
 	
 	public static void main(String[] args) throws SQLException {
 		var userService = new CreateUserService();
-		try(var service = new KafkaService<Order>(CreateUserService.class.getSimpleName(), 
+		try(var service = new KafkaService<>(CreateUserService.class.getSimpleName(), 
 				"ECOMMERCE_NEW_ORDER", userService::parse, Order.class, Map.of())){
 			service.run();
 		}
 	}
 	
-	private void parse(ConsumerRecord<String, Order> record) throws InterruptedException, ExecutionException, SQLException {
+	private void parse(ConsumerRecord<String, Message<Order>> record) throws InterruptedException, ExecutionException, SQLException {
 		System.out.println("-----------------------------------");
 		System.out.println("Processing new order: Checking for new user");
 		System.out.println(record.key());
 		System.out.println(record.value());
-		var order = record.value();
+		var order = record.value().getPayload();
 		if(isNewUser(order.getEmail())) {
 			insertNewUser(order.getEmail());
 		}

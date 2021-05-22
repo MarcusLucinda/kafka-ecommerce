@@ -15,25 +15,25 @@ import org.apache.kafka.common.serialization.StringDeserializer;
 
 class KafkaService<T> implements Closeable {
 	
-	private final KafkaConsumer<String, T> consumer;
+	private final KafkaConsumer<String, Message<T>> consumer;
 	private final ConsumerFunction parse;
 	private Class<T> type;
 	private Map<String, String> props;
 
-	KafkaService(String groupId, String topic, ConsumerFunction parse, Class<T> type, Map<String, String> props) {
+	KafkaService(String groupId, String topic, ConsumerFunction<T> parse, Class<T> type, Map<String, String> props) {
 		this.parse = parse;
 		this.type = type;
 		this.props = props;
-		this.consumer = new KafkaConsumer<String, T>(properties(type, groupId, props));
+		this.consumer = new KafkaConsumer<String, Message<T>>(properties(type, groupId, props));
 		consumer.subscribe(Collections.singletonList(topic));
 		
 	}
 
-	KafkaService(String groupId, Pattern topic, ConsumerFunction parse, Class<T> type, Map<String, String> props) {
+	KafkaService(String groupId, Pattern topic, ConsumerFunction<T> parse, Class<T> type, Map<String, String> props) {
 		this.parse = parse;
 		this.type = type;
 		this.props = props;
-		this.consumer = new KafkaConsumer<String, T>(properties(type, groupId, props));
+		this.consumer = new KafkaConsumer<String, Message<T>>(properties(type, groupId, props));
 		consumer.subscribe(topic);
 	}
 
@@ -61,7 +61,6 @@ class KafkaService<T> implements Closeable {
 		properties.setProperty(ConsumerConfig.CLIENT_ID_CONFIG, UUID.randomUUID().toString());
 		properties.setProperty(ConsumerConfig.GROUP_ID_CONFIG, groupId);
 		properties.setProperty(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, "1");
-		properties.setProperty(GsonDeserializer.TYPE_CONFIG, type.getName());
 		properties.putAll(props);
 		return properties;
 	}
