@@ -15,9 +15,9 @@ public class NewOrderMain {
 				var email = Math.random() + "@email.com";
 				
 				var order = new Order(userId, amount, email);
-				orderDispatcher.send("ECOMMERCE_NEW_ORDER", email, order);
+				orderDispatcher.send("ECOMMERCE_NEW_ORDER", email, new CorrelationId(NewOrderMain.class.getSimpleName()), order);
 				var emailCode = "We're processing your order";
-				emailDispatcher.send("ECOMMERCE_SEND_EMAIL", email, emailCode);
+				emailDispatcher.send("ECOMMERCE_SEND_EMAIL", email, new CorrelationId(NewOrderMain.class.getSimpleName()), emailCode);
 			}
 		}
 	}
