@@ -12,7 +12,7 @@ public class ReportService {
 	public static void main(String[] args) {
 		var reportService = new ReportService();
 		try(var service = new KafkaService<>(ReportService.class.getSimpleName(), 
-				"ECOMMERCE_USER_GENERATE_REPORT", reportService::parse, User.class, Map.of())){
+				"ECOMMERCE_USER_GENERATE_REPORT", reportService::parse, Map.of())){
 			service.run();
 		}
 	}

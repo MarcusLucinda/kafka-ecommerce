@@ -17,23 +17,20 @@ class KafkaService<T> implements Closeable {
 	
 	private final KafkaConsumer<String, Message<T>> consumer;
 	private final ConsumerFunction parse;
-	private Class<T> type;
 	private Map<String, String> props;
 
-	KafkaService(String groupId, String topic, ConsumerFunction<T> parse, Class<T> type, Map<String, String> props) {
+	KafkaService(String groupId, String topic, ConsumerFunction<T> parse, Map<String, String> props) {
 		this.parse = parse;
-		this.type = type;
 		this.props = props;
-		this.consumer = new KafkaConsumer<String, Message<T>>(properties(type, groupId, props));
+		this.consumer = new KafkaConsumer<String, Message<T>>(properties(groupId, props));
 		consumer.subscribe(Collections.singletonList(topic));
 		
 	}
 
 	KafkaService(String groupId, Pattern topic, ConsumerFunction<T> parse, Class<T> type, Map<String, String> props) {
 		this.parse = parse;
-		this.type = type;
 		this.props = props;
-		this.consumer = new KafkaConsumer<String, Message<T>>(properties(type, groupId, props));
+		this.consumer = new KafkaConsumer<String, Message<T>>(properties(groupId, props));
 		consumer.subscribe(topic);
 	}
 
@@ -53,7 +50,7 @@ class KafkaService<T> implements Closeable {
 		}
 	}
 	
-	private Properties properties(Class<T> type, String groupId, Map<String, String> props) {
+	private Properties properties(String groupId, Map<String, String> props) {
 		var properties = new Properties();
 		properties.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
 		properties.setProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());

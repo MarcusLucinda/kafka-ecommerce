@@ -24,7 +24,7 @@ public class CreateUserService {
 	public static void main(String[] args) throws SQLException {
 		var userService = new CreateUserService();
 		try(var service = new KafkaService<>(CreateUserService.class.getSimpleName(), 
-				"ECOMMERCE_NEW_ORDER", userService::parse, Order.class, Map.of())){
+				"ECOMMERCE_NEW_ORDER", userService::parse, Map.of())){
 			service.run();
 		}
 	}
