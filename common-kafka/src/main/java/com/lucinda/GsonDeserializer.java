@@ -9,6 +9,9 @@ public class GsonDeserializer<TMessage> implements Deserializer<Message>{
 	
 	private final Gson gson = new GsonBuilder().registerTypeAdapter(Message.class, new MessageAdapter()).create();
 
+	/**
+	 * deserialize the message
+	 */
 	@Override
 	public Message deserialize(String topic, byte[] data) {
 		var serial = gson.fromJson(new String(data), Message.class);

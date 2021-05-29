@@ -19,6 +19,15 @@ class KafkaDispatcher<T> implements Closeable{
 	}
 
 	
+	/**
+	 * send the message for consumpion
+	 * @param topic | the topic the record will be appended to
+	 * @param key | the key that will be included in the record
+	 * @param id | the message correlation id
+	 * @param payload | the message data
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
 	void send(String topic, String key, CorrelationId id, T payload) throws InterruptedException, ExecutionException {
 		var value = new Message<T>(id, payload);
 		var record = new ProducerRecord<>(topic, key, value);

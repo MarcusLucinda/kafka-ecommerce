@@ -9,10 +9,16 @@ import java.util.concurrent.ExecutionException;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 
+
 public class CreateUserService {
 	
 	private Connection connection;
 
+	
+	/**
+	 * connects to the db and create the users table if it not exists 
+	 * @throws SQLException
+	 */
 	public CreateUserService() throws SQLException {
 		String url = "jdbc:sqlite:target/users_database.db";
 		this.connection = DriverManager.getConnection(url);
@@ -29,6 +35,7 @@ public class CreateUserService {
 		}
 	}
 	
+	
 	private void parse(ConsumerRecord<String, Message<Order>> record) throws InterruptedException, ExecutionException, SQLException {
 		System.out.println("-----------------------------------");
 		System.out.println("Processing new order: Checking for new user");
@@ -40,6 +47,7 @@ public class CreateUserService {
 		}
 	}
 
+	
 	private void insertNewUser(String email) throws SQLException {
 		var insert = connection.prepareStatement("insert into Users (uuid, email) values (?, ?)");
 		String uuid = UUID.randomUUID().toString();

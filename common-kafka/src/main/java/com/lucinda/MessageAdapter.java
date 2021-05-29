@@ -12,6 +12,12 @@ import com.google.gson.JsonSerializer;
 
 public class MessageAdapter implements JsonSerializer<Message>, JsonDeserializer<Message>{
 
+	/**
+	 * @param message | the message that will be converted to json
+	 * @param typeOfSrc | the full type of the source object
+	 * @param context | the context of the object to be serialized
+	 * @return a JsonElement corresponding to the specified object.
+	 */
 	@Override
 	public JsonElement serialize(Message message, Type typeOfSrc, JsonSerializationContext context) {
 		JsonObject obj = new JsonObject();
@@ -21,6 +27,13 @@ public class MessageAdapter implements JsonSerializer<Message>, JsonDeserializer
 		return obj;
 	}
 
+	/**
+	 * @param json | the Json data being deserialized
+	 * @param typeOfT | the type of the Object to deserialize to
+	 * @param context | the context of the object to be deserialized
+	 * @return a deserialized object of the specified type typeOfT which is a subclass of {@code T}
+	 * @throws JsonParseException if json is not in the expected format of {@code typeofT}
+	 */
 	@Override
 	public Message deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
 			throws JsonParseException {
