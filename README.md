@@ -145,3 +145,6 @@ public class MessageAdapter implements JsonSerializer<Message>, JsonDeserializer
 
 }
 ```
+<br/>
+<br/>
+Learnt on [Alura](https://www.alura.com.br)
