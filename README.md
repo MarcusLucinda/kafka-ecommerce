@@ -1,6 +1,6 @@
 ## Kafka E-commerce Data Streaming
 
-This is a small simulation of a e-commerce message streaming service. It was made with Java and the Kafka API.
+This is a small simulation of an e-commerce message streaming service. It was made with Java and the Kafka API.
 \
 &nbsp;
 
